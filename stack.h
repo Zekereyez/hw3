@@ -6,7 +6,7 @@
 
 // Use inheritance from std::vector (choose public/private) as appropriate
 template <typename T>
-class Stack : private std::vector <typename T>
+class Stack : private std::vector <T>
 {
 public:
     Stack();
@@ -18,7 +18,7 @@ public:
     const T& top() const; // throws std::underflow_error if empty
     // Add other members only if necessary
 private:
-    std::vector <typename T> items;
+    std::vector <T> items;
 };
 
 template <typename T>
