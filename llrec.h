@@ -81,8 +81,20 @@ Node* llfilter(Node* head, Comp pred)
     //*********************************************
     // Provide your implementation below
     //*********************************************
+    
+    // OKAY... so we need comparators for this function that if
+    // the comparator evaluates to true this means that the node must be
+    // filtered out and not be in the list otherwise keep it in there
+    if (head == nullptr) {
+        return head;
+    }
+    if (pred(head->val)) {
+        // evaluates true so we must filter out the value from the list
+        head = head->next;
+    }
+    llfilter(head, pred);
 
-
+    return head;
 }
 
 #endif
