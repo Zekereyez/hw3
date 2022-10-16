@@ -55,7 +55,7 @@ public:
   bool empty() const;
 
     /**
-   * @brief Returns size of the heap
+   * @brief Returns size_ of the heap
    * 
    */
   size_t size() const;
@@ -68,17 +68,11 @@ private:
   // should be a vector
   int ary_; // this is the how many children heap has 
   int size_ = 0; // this is useful with array stored heap
-  std::vector<std::pair<T, int>> heap; // int is the priority while t is item
+  std::vector<T> heap; // t is item
   Comparator compareItems;
   void trickleUp(int currIndex);
   void trickleDown(int currIndex, int endIndex);
   int findBestChildIndex(int currIndex, int endIndex);
-  
-  // need to implement trickle up that would work for heapify and also 
-  // could possibly need trickle down for it 
-
-
-
 };
 
 // Add implementation of member functions here
@@ -102,6 +96,7 @@ void Heap<T, PComparator>::push(const T& item) {
   heap.push_back(item);
   size_++;
   // call the trickleUp on the last item
+  trickleUp(size_ - 1);
 }
 
 template <typename T, typename PComparator>
@@ -127,17 +122,6 @@ void Heap<T,PComparator>::trickleDown(int currIndex, int endIndex) {
   if (compareItems(heap[currIndex], heap[bestIndex])) {
     std::swap(heap[currIndex], heap[bestIndex]);
   }
-  while (firstChildIndex <= endIndex) {
-    int nextIndex = currIndex * ary_ + 2;
-    int nextChildIndex = nextIndex <= endIndex ? nextIndex : -1;
-    int indexToSwap;
-    if (nextChildIndex != -1 && compareItems(heap[nextChildIndex], heap[firstChildIndex])) {
-        indexToSwap = firstChildIndex;
-    }
-    else if (nextChildIndex != -1 && !compareItems(heap[nextChildIndex], heap[firstChildIndex])) {
-      indexToSwap = nextChildIndex;
-    }
-  }
 }
 
 template <typename T, typename PComparator>
@@ -161,7 +145,7 @@ T const & Heap<T,PComparator>::top() const
   }
   // If we get here we know the heap has at least 1 item
   // Add code to return the top element
-  return heap[0].first; // should this be arrow or period dereferencer?
+  return heap[0]; // should this be arrow or period dereferencer?
 }
 
 
@@ -177,32 +161,32 @@ void Heap<T,PComparator>::pop()
     throw std::exception("Cannot pop empty heap");
   }
   // we need to lose the first element in the vector 
-  // and the size need to decrement as well
-  heap[0] = heap[size - 1];
+  // and the size_ need to decrement as well
+  heap[0] = heap[size_ - 1];
   // get rid of the last element so we arent double counting
   heap.pop_back();
-  size--;
+  size_--;
   // call trickle down on the first element of the heap since is new
   trickleDown(0);
 }
 
 template <typename T, typename PComparator>
 int Heap<T,PComparator>::findBestChildIndex(int currIndex, int endIndex) {
-  int smallestChild = currIndex * ary_ + 1;
-  int indexToSwap = smallestChild;
+  int smallestChildIndex = currIndex * ary_ + 1;
+  int indexToSwap = smallestChildIndex;
   int childCounter = 1;
-  while (smallestChild < size_) {
-    if (childCounter > ary_) {
+  while (smallestChildIndex + childCounter < size_ - 1) {
+    if (childCounter >= ary_) { // check/test this line and above may have issues...
       break; // ensures function only deals with valid children
     }
-    int currentChildIndex = indexToSwap + childCounter;
-    if (compareItems(heap[currentChildIndex], heap[smallestChild])) {
+    int currentChildIndex = smallestChildIndex + childCounter;
+    // indexToSwap = compareItems(heap[currentChildIndex], heap[indexToSwap]) ? currentChildIndex : indexToSwap;
+    if (compareItems(heap[currentChildIndex], heap[indexToSwap])) {
       indexToSwap = currentChildIndex;
     }
-
-
+    childCounter++;
   }
-  return -1;
+  return indexToSwap;
 }
 
 
