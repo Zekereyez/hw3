@@ -66,6 +66,14 @@ void dealloc(Node* head)
 //   Add any helper functions or
 //   function object struct declarations
 // -----------------------------------------------
+// void llpivot(Node *&head, Node *&smaller, Node *&larger, int pivot);
+
+struct Even {
+    bool operator()(int value) {
+        return (value % 2 == 0);
+    }
+};
+
 
 
 
@@ -86,6 +94,12 @@ int main(int argc, char* argv[])
     print(head);
 
     // Test out your linked list code
+    cout << "New list with pivot of 8" << endl;
+    cout << "Filtered list with even comparison" << endl;
+    Even obj;
+    head = llfilter(head, obj);
+    print(head);
+
 
 
 
