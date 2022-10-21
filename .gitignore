@@ -2,3 +2,4 @@ llrec-test
 llrec-test.o
 llrec.o
 stack_test
+heap_test/heap_tests

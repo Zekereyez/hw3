@@ -69,9 +69,9 @@ private:
   int ary_; // this is the how many children heap has 
   int size_ = 0; // this is useful with array stored heap
   std::vector<T> heap; // t is item
-  Comparator compareItems;
+  PComparator compareItems;
   void trickleUp(int currIndex);
-  void trickleDown(int currIndex, int endIndex);
+  void trickleDown(int currIndex);
   int findBestChildIndex(int currIndex, int endIndex);
 };
 
@@ -79,11 +79,12 @@ private:
 
 // heap constructor 
 template <typename T, typename PComparator>
-Heap<T, PComparator>::Heap(int m=2, PComparator c = PComparator()) : compareItems(c) {
+Heap<T, PComparator>::Heap(int m, PComparator c) : compareItems(c) {
   // we need to do something with this comparator as it will be the 
   // key in determining if the heap will be a max or min heap/=
   // check c and evaluate it. The comparator is fueled by the less in std
   ary_ = m > 2 ? m : 2;
+  // compareItems = c;
 }
 
 template <typename T, typename PComparator>
@@ -107,17 +108,17 @@ bool Heap<T,PComparator>::empty() const {
 template <typename T, typename PComparator>
 void Heap<T,PComparator>::trickleUp(int currIndex) {
   int parentIndex = (currIndex - 1) / ary_;
-  while (currIndex > 0 && compareItems(head[currIndex], head[parentIndex])) {
-    std::swap(heap[currIndex], head[parentIndex]);
+  while (currIndex > 0 && compareItems(heap[currIndex], heap[parentIndex])) {
+    std::swap(heap[currIndex], heap[parentIndex]);
     currIndex = parentIndex;
     parentIndex = (currIndex - 1) / ary_;
   }
 }
 
 template <typename T, typename PComparator>
-void Heap<T,PComparator>::trickleDown(int currIndex, int endIndex) {
+void Heap<T,PComparator>::trickleDown(int currIndex) {
   int firstChildIndex = currIndex * ary_ + 1;
-  int bestIndex = findBestChildIndex(currIndex, endIndex); // returns the best index to swap
+  int bestIndex = findBestChildIndex(currIndex, size_ - 1); // returns the best index to swap
   // check to ensure that the items should be swapped 
   if (compareItems(heap[currIndex], heap[bestIndex])) {
     std::swap(heap[currIndex], heap[bestIndex]);
@@ -140,7 +141,7 @@ T const & Heap<T,PComparator>::top() const
     // ================================
     // throw the appropriate exception
     // ================================
-    throw std::exception("Cannot top empty heap");
+    throw std::underflow_error("Cannot top empty heap");
 
   }
   // If we get here we know the heap has at least 1 item
@@ -158,7 +159,7 @@ void Heap<T,PComparator>::pop()
     // ================================
     // throw the appropriate exception
     // ================================
-    throw std::exception("Cannot pop empty heap");
+    throw std::underflow_error("Cannot pop empty heap");
   }
   // we need to lose the first element in the vector 
   // and the size_ need to decrement as well
