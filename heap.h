@@ -188,7 +188,7 @@ int Heap<T,PComparator>::findBestChildIndex(int currIndex, int endIndex) {
   int indexToSwap = smallestChildIndex;
   int childCounter = 1;
   while (smallestChildIndex + childCounter <= smallestChildIndex + ary_ - 1) {
-    if (childCounter + smallestChildIndex >= size_) { // check/test this line and above may have issues...
+    if (childCounter + smallestChildIndex >= size_) { 
       break; // ensures function only deals with valid children
     }
     int currentChildIndex = smallestChildIndex + childCounter;
