@@ -1,6 +1,7 @@
 #ifndef LLREC_H
 #define LLREC_H
 #include <cstdlib>
+#include <iostream> 
 
 /**
  * Node struct for both problems
@@ -86,15 +87,24 @@ Node* llfilter(Node* head, Comp pred)
     // the comparator evaluates to true this means that the node must be
     // filtered out and not be in the list otherwise keep it in there
     if (head == nullptr) {
-        return head;
+        return nullptr;
     }
     if (pred(head->val)) {
         // evaluates true so we must filter out the value from the list
-        head = head->next;
+        Node* temp = head->next;
+        std::cout << temp->val << std::endl;
+        std::cout << "Head: " << head->val << std::endl;
+        // head = head->next;
+        // delete head;
+        return llfilter(temp, pred);
     }
-    llfilter(head, pred);
+    else {
+        head->next = llfilter(head->next, pred);
+        return head;
+    }
+    // return llfilter(head, pred);
 
-    return head;
-}
+    // return head;
+} 
 
 #endif

@@ -22,9 +22,15 @@ private:
 };
 
 template <typename T>
+Stack<T>::Stack() {}
+
+template <typename T>
+Stack<T>::~Stack() {}
+
+template <typename T>
 bool Stack<T>::empty() const {
   // check if empty
-  if (items.empty()) {
+  if (std::vector<T>::empty()) {
     return true;
   }
   else {
@@ -33,29 +39,35 @@ bool Stack<T>::empty() const {
 }
 
 template <typename T>
+void Stack<T>::push(const T& item) {
+  // return the size of stack ie vector
+  std::vector<T>::push_back(item);
+}
+
+template <typename T>
 size_t Stack<T>::size() const {
   // return the size of stack ie vector
-  return items.size();
+  return std::vector<T>::size();
 }
 
 template <typename T>
 void Stack<T>::pop() {
   // check if empty before popping if empty then 
   // I should throw std::underflow_error
-  if (items.empty()) {
-    throw std::underflow_error("empty stack");
+  if (std::vector<T>::empty()) {
+    throw std::underflow_error("Cannot pop empty stack");
   }
-  items.pop_back();
+  std::vector<T>::pop_back();
 }
 
 template <typename T>
 const T& Stack<T>::top() const {
   // if empty throws std::underflow_error
   // else do othershit
-  if (items.empty()) {
-    throw std::underflow_error("empty stack");
+  if (std::vector<T>::empty()) {
+    throw std::underflow_error("Cannot top empty stack");
   }
-  return items.back();
+  return std::vector<T>::back();
 }
 
 
