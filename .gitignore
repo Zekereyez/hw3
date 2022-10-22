@@ -3,3 +3,6 @@ llrec-test.o
 llrec.o
 stack_test
 heap_test/heap_tests
+logicsim/gate.o
+logicsim/logicsim
+logicsim/wire.o
