@@ -91,11 +91,10 @@ Node* llfilter(Node* head, Comp pred)
     }
     if (pred(head->val)) {
         // evaluates true so we must filter out the value from the list
+        // and deallocate the node 
         Node* temp = head->next;
+        delete head;
         std::cout << temp->val << std::endl;
-        std::cout << "Head: " << head->val << std::endl;
-        // head = head->next;
-        // delete head;
         return llfilter(temp, pred);
     }
     else {

@@ -97,25 +97,16 @@ int main(int argc, char* argv[])
     print(head);
 
     // Test out your linked list code
-    cout << "New list with pivot of 8" << endl;
+    cout << "New list with pivot of 9" << endl;
+    Node* smaller;
+    Node* larger;
+    llpivot(head, smaller, larger, 9);
+    print(smaller);
+    print(larger);
     cout << "Filtered list with even comparison" << endl;
     Even obj;
     head = llfilter(head, obj);
     print(head);
-
-    // cout << "STACK TESTING" << endl;
-    // cout << "Creating Templated Stack of String" << endl;
-    // Stack<string> stack;
-    // string word1 = "I love";
-    // string word2 = "CS104";
-    // stack.push(word1);
-    // stack.push(word2);
-    // cout << "\n" << stack.top() << endl;
-    // stack.pop();
-    // cout << "\n" << stack.top() << endl;
-    // stack.pop();
-
-
     
     return 0;
 
