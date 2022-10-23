@@ -6,3 +6,5 @@ heap_test/heap_tests
 logicsim/gate.o
 logicsim/logicsim
 logicsim/wire.o
+llrec-test2.in
+stack-test

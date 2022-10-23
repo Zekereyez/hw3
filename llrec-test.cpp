@@ -100,12 +100,18 @@ int main(int argc, char* argv[])
     cout << "New list with pivot of 9" << endl;
     Node* smaller;
     Node* larger;
+    // Pivot test
     llpivot(head, smaller, larger, 9);
     print(smaller);
     print(larger);
+    // Filter Test
     cout << "Filtered list with even comparison" << endl;
     Even obj;
-    head = llfilter(head, obj);
+    Node* filterHead = readList(argv[2]);
+    cout << "Original list: ";
+    print(filterHead);
+    cout << endl << "Filtered List: ";
+    head = llfilter(filterHead, obj);
     print(head);
     
     return 0;
