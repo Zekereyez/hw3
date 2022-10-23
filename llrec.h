@@ -89,20 +89,6 @@ Node* llfilter(Node* head, Comp pred)
     if (head == nullptr) {
         return nullptr;
     }
-    // if (pred(head->val)) {
-    //     // evaluates true so we must filter out the value from the list
-    //     // and deallocate the node 
-    //     Node* temp = head->next;
-    //     delete head;
-    //     std::cout << temp->val << std::endl;
-    //     return llfilter(temp, pred);
-    // }
-    // else {
-    //     head->next = llfilter(head->next, pred);
-    //     return head;
-    // }
-    // return llfilter(head, pred);
-    // return head;
     if (pred(head->val)) {
         head = llfilter(head->next, pred);
     }
